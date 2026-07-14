@@ -1,3 +1,4 @@
+ HEAD
 # 🍽️ Restaurant Automation SaaS
 
 A modern multi-tenant Restaurant Automation SaaS platform designed to streamline restaurant operations from QR-based customer ordering to kitchen batching, service management, billing, loyalty systems, analytics, and platform-level SaaS administration.
@@ -579,3 +580,6 @@ npm run verify:phase1 --workspace backend
 # 🤝 Contributors
 
 Built and maintained by the Restaurant Automation SaaS Team in collaboration with Graphura Pvt. Ltd.
+=======
+# Restaurant-Reservation-System
+>>>>>>> 2bde8a2f9b82d4b7b394c914f6d285731f1efa1e
