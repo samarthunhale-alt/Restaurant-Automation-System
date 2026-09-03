@@ -1,6 +1,9 @@
 {
   "name": "restaurant-automation-saas",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "version": "1.0.0",
   "workspaces": [
     "backend",
