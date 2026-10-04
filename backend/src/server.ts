@@ -42,10 +42,12 @@ async function bootstrap(): Promise<void> {
         databaseConnected: isDatabaseConnected,
       });
     });
-  } catch (error) {
-    logger.error('Failed to start server', { error });
-    process.exit(1);
-  }
+ } catch (error) {
+  logger.error('Failed to start server', {
+    error: error instanceof Error ? error.stack : String(error),
+  });
+  process.exit(1);
+}
 }
 
 async function shutdown(signal: string): Promise<void> {
