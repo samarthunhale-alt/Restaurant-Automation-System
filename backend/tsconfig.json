@@ -10,14 +10,15 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "resolveJsonModule": true
   },
 
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
 
   "exclude": [
     "node_modules",
+    "src/tests",
+    "**/*.test.ts",
     "**/*.spec.ts"
   ]
 }
