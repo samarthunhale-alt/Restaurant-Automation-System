@@ -37,11 +37,15 @@ if (env.HELMET_ENABLED) {
   );
 }
 
+/* =========================
+   CORS CONFIGURATION
+   ========================= */
+
 app.use(
   cors({
     origin(origin, callback) {
       const allowedOrigins = [
-        'https://restaurant-automation-system-bk0v3ytt.vercel.app',
+        'https://restaurant-automation-system-theta.vercel.app',
         ...env.corsOrigins,
       ];
 
@@ -52,10 +56,24 @@ app.use(
 
       callback(new Error(`CORS origin denied: ${origin}`));
     },
+
     credentials: true,
+
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Content-Type',
+      'Accept',
+      'Authorization',
+    ],
   }),
 );
+
+/* =========================
+   LOGGING
+   ========================= */
 
 app.use(
   morgan(env.isProduction ? 'combined' : 'dev', {
@@ -66,17 +84,38 @@ app.use(
   }),
 );
 
+/* =========================
+   BODY PARSING
+   ========================= */
+
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
+
+/* =========================
+   SECURITY
+   ========================= */
+
 app.use(cookieParser(env.COOKIE_SECRET));
 app.use(mongoSanitize());
+
+/* =========================
+   STATIC FILES
+   ========================= */
 
 app.use(
   `/${env.UPLOAD_PATH}`,
   express.static(path.resolve(process.cwd(), env.UPLOAD_PATH)),
 );
 
+/* =========================
+   HEALTH
+   ========================= */
+
 app.use(healthRouter);
+
+/* =========================
+   ROOT
+   ========================= */
 
 app.get('/', (_req, res) => {
   res.status(200).json({
@@ -92,7 +131,15 @@ app.get('/', (_req, res) => {
   });
 });
 
+/* =========================
+   API RATE LIMITER
+   ========================= */
+
 app.use('/api', apiRateLimiter);
+
+/* =========================
+   API INFO
+   ========================= */
 
 app.get(env.API_PREFIX, (_req, res) => {
   res.status(200).json({
@@ -105,14 +152,34 @@ app.get(env.API_PREFIX, (_req, res) => {
   });
 });
 
+/* =========================
+   API ROUTES
+   ========================= */
+
 app.use(`${env.API_PREFIX}/tables`, tableRoutes);
+
 app.use(`${env.API_PREFIX}/sessions`, tableSessionRoutes);
-app.use(`${env.API_PREFIX}/customer/requests`, customerRequestsRoutes);
-app.use(`${env.API_PREFIX}/notifications`, notificationsRoutes);
+
+app.use(
+  `${env.API_PREFIX}/customer/requests`,
+  customerRequestsRoutes,
+);
+
+app.use(
+  `${env.API_PREFIX}/notifications`,
+  notificationsRoutes,
+);
+
 app.use(`${env.API_PREFIX}`, billingRoutes);
+
 app.use(env.API_PREFIX, apiRouter);
 
+/* =========================
+   ERROR HANDLING
+   ========================= */
+
 app.use(notFoundHandler);
+
 app.use(errorHandler);
 
 export default app;
