@@ -76,6 +76,7 @@ Vercel – Frontend
 Render – Backend
 MongoDB Atlas – Database
 🏗️ Architecture
+text
 User
   ↓
 React + Vite Frontend
@@ -87,7 +88,8 @@ Node.js + Express Backend
 Mongoose
   ↓
 MongoDB Atlas
-Project Structure
+📁 Project Structure
+text
 Restaurant-Automation-System/
 │
 ├── frontend/
@@ -124,6 +126,7 @@ Cleaning Staff – Table cleaning and cleaning tasks
 Customer – Restaurant reservations and customer operations
 Super Admin – Restaurant, subscription, analytics and system management
 🔄 Restaurant Workflow
+text
 Customer
    ↓
 Reservation / Order
@@ -147,6 +150,7 @@ Reports & Analytics
 
 The backend API uses the following base path:
 
+text
 /api/v1
 
 Example API modules include:
@@ -161,20 +165,22 @@ The application also uses Socket.IO for real-time restaurant operations where re
 
 🚀 Installation
 Clone Repository
+bash
 git clone https://github.com/samarthunhale-alt/Restaurant-Automation-System.git
 cd Restaurant-Automation-System
 Frontend Setup
+bash
 cd frontend
 npm install
 npm run dev
 
-Frontend runs on:
+Frontend runs on: http://localhost:5173
 
-http://localhost:5173
 Backend Setup
 
 Open another terminal:
 
+bash
 cd backend
 npm install
 npm run dev
@@ -183,9 +189,11 @@ The backend runs on the configured local server port.
 
 🔐 Environment Variables
 Frontend
+env
 VITE_API_URL=http://localhost:5000/api/v1
 VITE_SOCKET_URL=http://localhost:5000
 Backend
+env
 PORT=
 MONGODB_URI=
 JWT_SECRET=
@@ -194,7 +202,7 @@ CORS_ORIGINS=
 CLIENT_URL=
 SOCKET_CORS_ORIGIN=
 
-Never commit .env files or production secrets to GitHub.
+⚠️ Never commit .env files or production secrets to GitHub.
 
 🔒 Security
 
@@ -211,21 +219,21 @@ MongoDB Sanitization
 Environment Variables
 Secure REST API Architecture
 ☁️ Deployment Architecture
-
-                  ┌─────────────────────────┐
-                 │         Vercel          │
-                 │ React + Vite Frontend   │
-                 └────────────┬────────────┘
-                              │
-                              │ REST API
-                              ↓
-                 ┌─────────────────────────┐
-                 │         Render          │
-                 │ Node + Express Backend  │
-                 └────────────┬────────────┘
-                              │
-                              ↓
-                 ┌─────────────────────────┐
-                 │      MongoDB Atlas      │
-                 │        Database         │
-                 └─────────────────────────┘
+text
+┌─────────────────────────┐
+│         Vercel          │
+│ React + Vite Frontend   │
+└────────────┬────────────┘
+             │
+             │ REST API
+             ↓
+┌─────────────────────────┐
+│         Render          │
+│ Node + Express Backend  │
+└────────────┬────────────┘
+             │
+             ↓
+┌─────────────────────────┐
+│      MongoDB Atlas      │
+│        Database         │
+└─────────────────────────┘
