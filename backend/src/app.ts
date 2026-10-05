@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import morgan from 'morgan';
 import path from 'path';
+
 import { env } from './config/env';
 import { logger } from './config/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
@@ -39,12 +40,17 @@ if (env.HELMET_ENABLED) {
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || env.corsOrigins.includes(origin)) {
+      const allowedOrigins = [
+        'https://restaurant-automation-system-bk0v3ytt.vercel.app',
+        ...env.corsOrigins,
+      ];
+
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
         return;
       }
 
-      callback(new Error('CORS origin denied'));
+      callback(new Error(`CORS origin denied: ${origin}`));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -64,7 +70,12 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(env.COOKIE_SECRET));
 app.use(mongoSanitize());
-app.use(`/${env.UPLOAD_PATH}`, express.static(path.resolve(process.cwd(), env.UPLOAD_PATH)));
+
+app.use(
+  `/${env.UPLOAD_PATH}`,
+  express.static(path.resolve(process.cwd(), env.UPLOAD_PATH)),
+);
+
 app.use(healthRouter);
 
 app.get('/', (_req, res) => {
